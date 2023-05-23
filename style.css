@@ -202,9 +202,34 @@ header h1 {
 }
 
 .current-player {
-  margin-top: -50px;
-  margin-bottom: 60px;
+  margin-top: -80px;
+  margin-bottom: 20px;
   font-size: 30px;
+}
+
+.btn {
+  font-size: 20px;
+  color: var(--dark-blue);
+  border: none;
+  border-radius: 10px;
+  box-shadow: 4px 4px 10px -5px var(--dark);
+  transition: 0.2s ease;
+  height: 60px;
+
+  margin-bottom: 60px;
+}
+
+.btn:hover {
+  color: var(--mid-blue);
+  box-shadow: none;
+}
+
+.btn.new-game {
+  width: 120px;
+}
+
+.btn.restart {
+  width: 150px;
 }
 
 .board {
