@@ -12,6 +12,11 @@ const GameOptions = (function() {
   let playerOneMarker = 'O';
   let playerTwoMarker = 'X';
 
+  // TODO: It will need to be display none when Restart button is clicked
+  const currentPlayerText = document.querySelector('.current-player');
+  currentPlayerText.style.display = 'none';
+  const currentPlayerMarker = document.querySelector('.current');
+
   // Option menu is show at web launch because this is inside IIFE Function.
   const menu = document.querySelector('.pop-up-div');
 
@@ -69,7 +74,10 @@ const GameOptions = (function() {
     background.classList.remove('pop-up-background');
     p1();
     p2();
-    // TODO
+    currentPlayerText.style.display = 'inline';
+    currentPlayerMarker.textContent = p1();
+
+    // TODO: Add function that will start new game, clear board
     if (playerVsPlayer.checked) {
       pvp();
     } else if (playerVsEasy.checked) {
@@ -84,11 +92,11 @@ const GameOptions = (function() {
   }
 
   function pve() {
-
+    console.log('Player vs Easy AI game mode');
   }
 
   function pvh() {
-
+    console.log('Player vs Hard AI game mode');
   }
 
   function p1() {
@@ -106,9 +114,10 @@ const GameOptions = (function() {
     menu.style.display = 'flex';
     background.classList.add('pop-up-background');
     document.body.appendChild(background);
+    currentPlayerText.style.display = 'none';
   }
 
-  return { p1, p2 };
+  return { p1, p2, currentPlayerMarker };
 })();
 
 // Game Returning Board IIFE Module Function
@@ -132,7 +141,7 @@ const GameBoard = (function() {
 })();
 
 // TODO: This function does so many things, it needs to be reworked and added 'GameController'
-// IIFE Module Function used to render game at DOM
+// Returning IIFE Module Function used to render game at DOM
 const DisplayController = (function() {
   'use strict';
   // Declared local property from "gameBoard" Function
@@ -141,14 +150,22 @@ const DisplayController = (function() {
   let round = 1;
 
   const boardBox = document.querySelectorAll('.board-box');
-  const showCurrentPlayer = document.querySelector('.current-player'); // TODO: Text Content at DOM that show who has a turn.
 
-  // Assigned board cells from DOM to each index of gameboard array
+  // TODO: Assigned board cells from DOM to each index of gameboard array
   for (let i = 0; i < _board.length; i++) {
      boardBox[i].textContent = _board[i];
   }
 
-  // TODO: Event listener that will add "O" or "X" to the board at DOM and board array
+  // TODO: Works fine, should be located here.
+  const restartBtn = document.querySelector('.restart');
+  restartBtn.addEventListener('click', () => {
+    for (let i = 0; i < _board.length; i++) {
+      boardBox[i].textContent = '';
+   }
+  });
+  const displayCurrentPlayer = GameOptions.currentPlayerMarker;
+
+  // TODO: Doesn't add value to index in array
   boardBox.forEach(box => box.addEventListener('click', () => {
     const firstPlayer = GameOptions.p1();
     const secondPlayer = GameOptions.p2();
@@ -168,6 +185,11 @@ const DisplayController = (function() {
 
     if (box.textContent === '') {
       box.textContent = changePlayer();
+      if (currentPlayer === firstPlayer)
+        displayCurrentPlayer.textContent = secondPlayer;
+      else {
+        displayCurrentPlayer.textContent = firstPlayer;
+      }
     }
   }));
 

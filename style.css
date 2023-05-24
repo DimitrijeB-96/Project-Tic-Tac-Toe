@@ -207,6 +207,12 @@ header h1 {
   font-size: 30px;
 }
 
+.current {
+  font-size: 46px;
+  font-weight: 900;
+  font-family: "Indie Flower", "Roboto", Arial, Helvetica, sans-serif;
+}
+
 .btn {
   font-size: 20px;
   color: var(--dark-blue);
