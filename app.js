@@ -1,28 +1,24 @@
 let gameStart = false;
 
 // Factory Function
-const player = (playerMarker) => {
-  
+const Player = (playerMarker) => {
   return { playerMarker };
 }
 
 // Pop up menu IIFE Returning Module Function.
-const gameOptions = (function() {
-  // Default values for players because this is inside IIFE Function.
+const GameOptions = (function() {
+  'use strict';
+
   let playerOneMarker = 'O';
   let playerTwoMarker = 'X';
 
   // Option menu is show at web launch because this is inside IIFE Function.
   const menu = document.querySelector('.pop-up-div');
-  menu.style.display = 'flex';
-  if (menu.style.display === 'flex') {
-    gameStart = false;
-  }
 
   // This div is used as an "background" behind Option menu and to prevent clicking at game board before game start.
   const background = document.createElement('div');
-  background.classList.add('pop-up-background');
-  document.body.appendChild(background);
+
+  openMenu();
 
   // Getting Radio buttons that are in same group to select whitch marker player will be using.
   const firstPlayerMarker = document.querySelectorAll('.first-player');
@@ -68,69 +64,113 @@ const gameOptions = (function() {
   newGameBtn.addEventListener('click', openMenu);
 
   function startGame() {
-    if (playerVsPlayer.checked) {
-
-    } else if (playerVsEasy.checked) {
-
-    } else if (playerVsHard.checked) {
-
-    }
     gameStart = true;
     menu.style.display = 'none';
     background.classList.remove('pop-up-background');
+    p1();
+    p2();
+    // TODO
+    if (playerVsPlayer.checked) {
+      pvp();
+    } else if (playerVsEasy.checked) {
+      pve();
+    } else if (playerVsHard.checked) {
+      pvh();
+    }
+  }
+
+  function pvp() {
+    console.log('Player vs Player game mode');
+  }
+
+  function pve() {
+
+  }
+
+  function pvh() {
+
+  }
+
+  function p1() {
+     const playerOne = Player(playerOneMarker);
+     return playerOne.playerMarker;
+  }
+
+  function p2() {
+    const playerTwo = Player(playerTwoMarker);
+    return playerTwo.playerMarker;
   }
 
   function openMenu() {
+    gameStart = false;
     menu.style.display = 'flex';
     background.classList.add('pop-up-background');
+    document.body.appendChild(background);
   }
 
-  return {playerOneMarker, playerTwoMarker}; // TODO: figure out which returning parameters to return
+  return { p1, p2 };
 })();
 
-// Game Board Returning IIFE Module Function
-const gameBoard = (function() {
+// Game Returning Board IIFE Module Function
+const GameBoard = (function() {
   // Empty array used as an placehold for each cell in a board.
   const gameboard = ['', '', '', '', '', '', '', '', ''];
 
-    // TODO: figure out how to determine when game should start since this is in IIFE Function and it won't get values
-    if (gameStart === true) {
-      const firstPlayer = player(gameOptions.playerOneMarker);
-      console.log(firstPlayer.playerMarker);
-      const secondPlayer = player(gameOptions.playerTwoMarker);
-      console.log(secondPlayer.playerMarker);
-    }
+  // TODO: Add winning conditions, and return them
+  const winningConditions = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ];
 
-    // TODO: Add winning conditions, and return them
-
-  return {gameboard};
+  return { gameboard };
 })();
 
-// Returning IIFE Module Function used to render game at DOM
-const displayController = (function() {
-  // Declare local property from "gameBoard" Function
-  const _board = gameBoard.gameboard;
+// TODO: This function does so many things, it needs to be reworked and added 'GameController'
+// IIFE Module Function used to render game at DOM
+const DisplayController = (function() {
+  'use strict';
+  // Declared local property from "gameBoard" Function
+  const _board = GameBoard.gameboard;
 
-  //
+  let round = 1;
+
   const boardBox = document.querySelectorAll('.board-box');
-  const currentPlayer = document.querySelector('.current-player'); // TODO: Text Content at DOM that show who has a turn.
+  const showCurrentPlayer = document.querySelector('.current-player'); // TODO: Text Content at DOM that show who has a turn.
 
   // Assigned board cells from DOM to each index of gameboard array
   for (let i = 0; i < _board.length; i++) {
      boardBox[i].textContent = _board[i];
   }
 
-  // TODO: ADD change player function 
-  boardBox.forEach(box => box.addEventListener('click', (e) => {
+  // TODO: Event listener that will add "O" or "X" to the board at DOM and board array
+  boardBox.forEach(box => box.addEventListener('click', () => {
+    const firstPlayer = GameOptions.p1();
+    const secondPlayer = GameOptions.p2();
+
+    let currentPlayer = firstPlayer;
+
+    function changePlayer() {
+      if (round % 2 === 1) {
+        currentPlayer = firstPlayer;
+      } else {
+        currentPlayer = secondPlayer;
+      }
+
+      round += 1;
+      return currentPlayer;
+    }
+
     if (box.textContent === '') {
-      box.textContent = jeff.playerMarker; // This was just a test that didn't work
-      _board[e.target.id] = box.textContent;
-      currentPlayer.textContent = `Current player is ${jeff.playerMarker}`;
-      console.log(e.target.id);
-      jeff.changeMarker();
+      box.textContent = changePlayer();
     }
   }));
-  
+
 })();
 
 
