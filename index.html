@@ -12,15 +12,14 @@
     <h1>Tic Tac Toe</h1>
   </header>
   <div class="pop-up-div">
-    <p>First player marker</p>
+    <p>Players</p>
     <div class="first-player-div">
-        <input type="radio" class="first-player" id="first-player-o" name="player1" value="player1-o" checked>
-        <input type="radio" class="first-player" id="first-player-x" name="player1" value="player1-x">
+      <label for="first-player">First player name (<span>X</span>)</label>
+      <input type="text" class="first-player" id="first-player">
     </div>
-    <p>Second player marker</p>
     <div class="second-player-div">
-        <input type="radio" class="second-player" id="second-player-o" name="player2" value="player2-o">
-        <input type="radio" class="second-player" id="second-player-x" name="player2" value="player2-x" checked>
+      <label for="second-player">Second player name (<span>O</span>)</label>
+      <input type="text" class="second-player" id="second-player">
     </div>
     <p>Game mode</p>
     <div class="game-mode">
@@ -32,7 +31,7 @@
   </div>
 
   <div class="main-content">
-    <p class="current-player">Current player is <span class="current"></span></p>
+    <p class="current-player">Make your move, <span class="current"></span></p>
     <div>
       <button class="btn new-game">New Game</button>
       <button class="btn restart">Restart Game</button>
@@ -52,6 +51,6 @@
     </div>
   </div>
   
-  <script src="app.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>

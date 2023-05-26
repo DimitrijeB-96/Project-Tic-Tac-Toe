@@ -43,7 +43,7 @@ header h1 {
 }
 
 .pop-up-div {
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
 
@@ -60,7 +60,6 @@ header h1 {
   margin-left: -250px;
   top: 50%;
   margin-top: -300px;
-  display: none;
   z-index: 100;
 }
 
@@ -82,6 +81,17 @@ header h1 {
   gap: 10px;
 }
 
+.first-player-div,
+.second-player-div {
+  flex-direction: column;
+}
+
+.first-player-div,
+.second-player-div {
+  margin-bottom: 15px;
+}
+
+
 .pop-up-div p {
   display: block;
   font-size: 24px;
@@ -93,47 +103,42 @@ header h1 {
   margin-top: 10px;
 }
 
-.pop-up-div input[type="radio"],
+.first-player-div label,
+.second-player-div label {
+  font-size: 20px;
+}
+
+label > span {
+  font-weight: 900;
+}
+
+.pop-up-div input[type="text"] {
+  width: 240px;
+  height: 36px;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+
+  color: var(--dark-blue);
+  font-size: 24px;
+  padding-left: 10px;
+}
+
+.pop-up-div input[type="text"]:focus {
+  border: 2px solid var(--dark-blue);
+  box-shadow: 0 0 10px -4px var(--dark);
+}
+
 .game-mode input[type="radio"] {
   appearance: none;
   background-color: var(--mid-blue);
   border-radius: 10px;
 }
 
-.pop-up-div input[type="radio"] {
-  width: 60px;
-  height: 60px;
-  margin-bottom: 10px;
-}
-
-.pop-up-div input[value="player1-o"]::after,
-.pop-up-div input[value="player2-o"]::after {
-  position: absolute;
-  left: 19px;
-  top: 10px;
-  content: "O";
-  font-size: 32px;
-}
-
-.pop-up-div input[value="player1-x"]::after,
-.pop-up-div input[value="player2-x"]::after {
-  position: absolute;
-  left: 90px;
-  top: 10px;
-  content: "X";
-  font-size: 32px;
-}
-
-.pop-up-div input[type="radio"]:checked,
 .game-mode input[type="radio"]:checked {
   border: 2px solid white;
   background-color: var(--dark-blue);
   box-shadow: 0 0 10px -2px var(--dark-blue);
-}
-
-.pop-up-div input[type="radio"]:checked {
-  width: 60px;
-  height: 60px;
 }
 
 .game-mode input[type="radio"] {
@@ -164,7 +169,6 @@ header h1 {
   left: 328px;
   top: 18px;
 }
-
 
 .game-mode input[type="radio"]:checked {
   width: 150px;
@@ -202,13 +206,14 @@ header h1 {
 }
 
 .current-player {
+  display: none;
   margin-top: -80px;
   margin-bottom: 20px;
   font-size: 30px;
 }
 
 .current {
-  font-size: 46px;
+  font-size: 35px;
   font-weight: 900;
   font-family: "Indie Flower", "Roboto", Arial, Helvetica, sans-serif;
 }
@@ -252,7 +257,7 @@ header h1 {
   justify-content: center;
   border-right: 4px solid var(--white);
   border-bottom: 4px solid var(--white);
-  cursor: pointer;
+  cursor:default;
 
   font-size: 5em;
   font-family: "Indie Flower", "Roboto", Arial, Helvetica, sans-serif;
