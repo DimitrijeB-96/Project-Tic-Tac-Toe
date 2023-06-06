@@ -135,12 +135,12 @@ const GameController = (function() {
       } 
     }
 
-    if (!checkBoard.includes('')) {
-      winner = 'TIE';
-    } else if (checkX) {
+    if (checkX) {
       winner = p1.getMarker();
     } else if (checkO) {
       winner = p2.getMarker();
+    } else if (checkBoard.includes('') === false) {
+      winner = 'TIE';
     }
 
     return winner;
@@ -189,6 +189,7 @@ const ScreenController = (function() {
 
   const displayWinnerDiv = document.querySelector('.pop-up-winner');
 
+  //////////////////////////////////////////////////////////////////
   const displayWinnerH1 = document.querySelector('.show-winner-h1');
   const displayWinnerSpan = document.querySelector('.show-winner');
 
@@ -241,7 +242,7 @@ const ScreenController = (function() {
     restartGame();
   }
 
-  function playAgain() { // FIX TIE DOESN'T WORK AFTER FIRST TIE EVERY OTHER RESULT WILL BE TIE
+  function playAgain() {
     hideWinner();
     restartGame();
   }
@@ -250,14 +251,16 @@ const ScreenController = (function() {
     hideCurrentPlayer();
     showWinner();
 
-    displayWinnerSpan.textContent = player.getName();
+    displayWinnerH1.textContent = `Winner is `;
+    displayWinnerSpan.textContent = `${player.getName()}`;
   }
 
   function displayGameOverWhenTie() {
     hideCurrentPlayer();
     showWinner();
 
-    displayWinnerH1.textContent = `IT'S A TIE!`;
+    displayWinnerH1.textContent = '';
+    displayWinnerSpan.textContent = `IT'S A TIE!`;
   }
 
   function showWinner() {
