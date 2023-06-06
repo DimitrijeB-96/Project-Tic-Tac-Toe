@@ -42,7 +42,7 @@ header h1 {
   font-size: 3em;
 }
 
-.pop-up-div {
+.pop-up-menu {
   display: none;
   flex-direction: column;
   align-items: center;
@@ -92,14 +92,14 @@ header h1 {
 }
 
 
-.pop-up-div p {
+.pop-up-menu p {
   display: block;
   font-size: 24px;
   font-weight: 900;
   margin-bottom: 10px;
 }
 
-.pop-up-div p:last-of-type {
+.pop-up-menu p:last-of-type {
   margin-top: 10px;
 }
 
@@ -112,7 +112,7 @@ label > span {
   font-weight: 900;
 }
 
-.pop-up-div input[type="text"] {
+.pop-up-menu input[type="text"] {
   width: 240px;
   height: 36px;
   border: none;
@@ -124,7 +124,7 @@ label > span {
   padding-left: 10px;
 }
 
-.pop-up-div input[type="text"]:focus {
+.pop-up-menu input[type="text"]:focus {
   border: 2px solid var(--dark-blue);
   box-shadow: 0 0 10px -4px var(--dark);
 }
@@ -226,8 +226,6 @@ label > span {
   box-shadow: 4px 4px 10px -5px var(--dark);
   transition: 0.2s ease;
   height: 60px;
-
-  margin-bottom: 60px;
 }
 
 .btn:hover {
@@ -241,6 +239,8 @@ label > span {
 
 .btn.restart {
   width: 150px;
+  margin-bottom: 60px;
+  margin-left: 20px;
 }
 
 .board {
@@ -257,7 +257,7 @@ label > span {
   justify-content: center;
   border-right: 4px solid var(--white);
   border-bottom: 4px solid var(--white);
-  cursor:default;
+  
 
   font-size: 5em;
   font-family: "Indie Flower", "Roboto", Arial, Helvetica, sans-serif;
@@ -273,4 +273,33 @@ label > span {
 .board-box:nth-child(8),
 .board-box:nth-child(9) {
   border-bottom: 0;
+}
+
+.pop-up-winner {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  height: 300px;
+  width: 100%;
+  background-color: var(--mid-blue);
+  box-shadow: 0 0 12px -1px var(--dark);
+  
+  position: absolute;
+  top: 60%;
+  margin-top: -300px;
+  z-index: 100;
+}
+
+.pop-up-winner h1 {
+  margin-top: 40px;
+  margin-bottom: 100px;
+}
+
+.pop-up-winner button {
+  width: 150px;
+}
+
+.pop-up-winner button:last-child {
+  margin-left: 20px;
 }

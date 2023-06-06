@@ -11,7 +11,7 @@
   <header>
     <h1>Tic Tac Toe</h1>
   </header>
-  <div class="pop-up-div">
+  <div class="pop-up-menu">
     <p>Players</p>
     <div class="first-player-div">
       <label for="first-player">First player name (<span>X</span>)</label>
@@ -30,13 +30,20 @@
     <button class="btn-start">Start</button>
   </div>
 
+  <div class="pop-up-winner">
+    <h1 class="show-winner-h1">Winner is <span class="show-winner"></span></h1>
+    <div>
+      <button class="btn menu">Menu</button>
+      <button class="btn play-again">Play Again</button>
+    </div>
+  </div>
+
   <div class="main-content">
     <p class="current-player">Make your move, <span class="current"></span></p>
     <div>
       <button class="btn new-game">New Game</button>
       <button class="btn restart">Restart Game</button>
     </div>
-    
 
     <div class="board">
       <div class="board-box" id="0"></div>
@@ -51,6 +58,6 @@
     </div>
   </div>
   
-  <script src="main.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
