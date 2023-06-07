@@ -55,6 +55,8 @@ const GameController = (function() {
 
   let _gameOver = false;
 
+  let _round = 1;
+
   let p1;
   let playerX = [];
 
@@ -79,6 +81,10 @@ const GameController = (function() {
     _currentPlayerMarker = p1.getMarker();
     _currentPlayerName = p1.getName();
   }
+
+  const getRound = () => _round;
+
+  const nextRound = () => _round++;
 
   const getCurrentPlayerMarker = () => _currentPlayerMarker;
 
@@ -147,6 +153,7 @@ const GameController = (function() {
   };
 
   const gameOver = () => {
+    _round = 1;
     _gameOver = true;
     return _gameOver;
   }
@@ -158,6 +165,8 @@ const GameController = (function() {
 
   return {
     startGame,
+    getRound,
+    nextRound,
     getFirstPlayer,
     getSecondPlayer,
     getCurrentPlayerMarker,
@@ -189,9 +198,8 @@ const ScreenController = (function() {
 
   const displayWinnerDiv = document.querySelector('.pop-up-winner');
 
-  //////////////////////////////////////////////////////////////////
-  const displayWinnerH1 = document.querySelector('.show-winner-h1');
-  const displayWinnerSpan = document.querySelector('.show-winner');
+  const displayWinnerH2 = document.querySelector('.show-winner-h1');
+  const displayWinnerP = document.querySelector('.show-winner');
 
   const boardBox = document.querySelectorAll('.board-box');
   boardBox.forEach(box => box.addEventListener('click', play));
@@ -205,6 +213,7 @@ const ScreenController = (function() {
   function startGame() {
     gameController.startGame(firstPlayerName.value, secondPlayerName.value);
     hideMenu();
+    restartGame();
     currentPlayerText(gameController.getFirstPlayer().getName());
   }
 
@@ -213,8 +222,10 @@ const ScreenController = (function() {
       e.target.textContent = gameController.getCurrentPlayerMarker();
       board.setBoard(e.target.id, gameController.getCurrentPlayerMarker());
       gameController.storePlayersMarkers();
+      console.log(gameController.getRound());
+
       let check = gameController.checkWinner();
-      if (check !== undefined) {
+      if (check !== undefined && gameController.getRound() <= 9) {
         if (check === 'X') {
           displayGameOver(gameController.getFirstPlayer());
         } else if (check === 'O') {
@@ -224,6 +235,7 @@ const ScreenController = (function() {
         }
         gameController.gameOver();
       } else {
+        gameController.nextRound();
         gameController.nextPlayerMarker();
         currentPlayerText(gameController.nextPlayerName());
       }
@@ -251,16 +263,16 @@ const ScreenController = (function() {
     hideCurrentPlayer();
     showWinner();
 
-    displayWinnerH1.textContent = `Winner is `;
-    displayWinnerSpan.textContent = `${player.getName()}`;
+    displayWinnerH2.textContent = `Winner is `;
+    displayWinnerP.textContent = `${player.getName()}`;
   }
 
   function displayGameOverWhenTie() {
     hideCurrentPlayer();
     showWinner();
 
-    displayWinnerH1.textContent = '';
-    displayWinnerSpan.textContent = `IT'S A TIE!`;
+    displayWinnerH2.textContent = '';
+    displayWinnerP.textContent = `IT'S A TIE!`;
   }
 
   function showWinner() {
@@ -302,6 +314,7 @@ const ScreenController = (function() {
     currentPlayerText(gameController.getFirstPlayer().getName());
     clearBoard();
     gameController.clearPlayers();
+    gameController.gameOver();
   }
 
   function clearBoard() {
