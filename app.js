@@ -35,7 +35,7 @@ const Board = (function() {
 
   const setBoard = (i, value) => {
     _board[i] = value; 
-    console.log("Current board is: ", _board); // Remove later
+    // console.log("Current board is: ", _board); Used to see state of array
   }
 
   const restartBoard = () => {
@@ -182,10 +182,8 @@ const GameController = (function() {
     getCurrentPlayerMarker,
     nextPlayerMarker,
     nextPlayerName,
-    setFirstPlayerMarker,
     checkWinner,
     storePlayersMarkers,
-    clearPlayers,
     gameOver,
   }
 })();
@@ -230,7 +228,6 @@ const RenderController = (function() {
 })();
 
 const MenuController = (function() {
-  const board = Board; /////////////////////////
   const game = GameController;
   const render = RenderController;
 
@@ -254,10 +251,6 @@ const MenuController = (function() {
   const chooseOpponent = document.querySelectorAll('.choose-opponent');
   chooseOpponent.forEach(opponent => opponent.addEventListener('click', checkOpponent));
 
-  const playerVsPlayer = document.getElementById('player-player');
-  const playerVsEasy = document.getElementById('player-easy');
-  const playerVsHard = document.getElementById('player-hard');
-
   function checkOpponent(e) {
     let whoIsOpponent = e.target.id;
     if (whoIsOpponent === 'player-player') {
@@ -267,15 +260,17 @@ const MenuController = (function() {
     } else if (whoIsOpponent === 'player-hard') {
       disableSecondPlayer('Hard') 
     }
-    return whoIsOpponent; // ???
+    return whoIsOpponent;
   }
 
   function disableSecondPlayer(whichBot) {
+    startGameBtn.disabled = true;
     secondPlayerName.disabled = true;
     secondPlayerName.value = `${whichBot} AI`;
   }
 
   function enableSecondPlayer() {
+    startGameBtn.disabled = false;
     secondPlayerName.disabled = false;
     secondPlayerName.value = '';
   }
@@ -293,7 +288,6 @@ const MenuController = (function() {
   return {
     getFirstPlayer,
     showMenu,
-    hideMenu,
   }
 })();
 
@@ -356,8 +350,7 @@ const WinnerController = (function() {
   return {
     displayGameOver,
     displayGameOverWhenTie,
-    hideWinner, /////// ?????
-    showWinner,
+    hideWinner,
   }
 })();
 
@@ -383,7 +376,6 @@ const ScreenController = (function() {
       e.target.textContent = game.getCurrentPlayerMarker();
       board.setBoard(e.target.id, game.getCurrentPlayerMarker());
       game.storePlayersMarkers();
-      console.log(game.getRound());
 
       let check = game.checkWinner();
       if (check !== undefined && game.getRound() <= 9) {
